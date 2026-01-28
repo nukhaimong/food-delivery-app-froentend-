@@ -1,14 +1,7 @@
-import express, { Request, request, Response } from 'express';
 import { prisma } from './lib/prisma';
-import { toNodeHandler } from 'better-auth/node';
-import { auth } from './lib/auth';
+import app from './app';
 
-const app = express();
-app.use(express.json());
-
-const PORT = process.env.PORT || 8000;
-
-app.all('/api/auth/{*any}', toNodeHandler(auth));
+const PORT = process.env.PORT || 8080;
 
 const main = async () => {
   try {
