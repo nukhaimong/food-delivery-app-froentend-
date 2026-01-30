@@ -6,6 +6,7 @@ import cors from 'cors';
 import { providerProfileRoutes } from './modules/providerProfile/providerProfile.routes';
 import { mealsRoutes } from './modules/meals/meals.routes';
 import { orderRoutes } from './modules/orders/order.routes';
+import { reviewsRoutes } from './modules/reviews/reviews.routes';
 
 const app: Application = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use('/category', categoryRoutes);
 app.use('/provider-profile', providerProfileRoutes);
 app.use('/meals', mealsRoutes);
 app.use('/order', orderRoutes);
+app.use('/reviews', reviewsRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Food Delivery App Backend is running!');

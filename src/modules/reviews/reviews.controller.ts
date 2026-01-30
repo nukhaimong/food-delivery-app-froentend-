@@ -34,6 +34,14 @@ const getReviewsByMeal = async (req: Request, res: Response) => {
 
     const reviews = await reviewService.getReviewsByMeal(mealId);
 
+    if (reviews.length === 0) {
+      return res.status(404).json({
+        sucess: false,
+        message: 'No reviews found for this meal',
+        reviews,
+      });
+    }
+
     return res.status(200).json({
       sucess: true,
       message: 'reviews retrieved successfully',
@@ -89,7 +97,7 @@ const deleteReviews = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       sucess: true,
-      message: 'review updated successfully',
+      message: 'review deleted successfully',
       review,
     });
   } catch (error) {
@@ -104,4 +112,7 @@ const deleteReviews = async (req: Request, res: Response) => {
 
 export const reviewsController = {
   createReviews,
+  getReviewsByMeal,
+  updateReview,
+  deleteReviews,
 };

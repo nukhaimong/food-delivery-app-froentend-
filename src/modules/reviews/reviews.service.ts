@@ -6,6 +6,9 @@ const createReviews = async (
   meal_id: string,
   data: { content: string; rating?: number },
 ) => {
+  if (!meal_id || !data.content || !customer_id) {
+    throw new Error('All required field must be provided');
+  }
   const review = prisma.reviews.create({
     data: {
       ...data,
