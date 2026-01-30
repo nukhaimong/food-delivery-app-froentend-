@@ -5,6 +5,14 @@ import { orderController } from './order.controller';
 
 const router = express.Router();
 
+router.get('/', auth(UserRole.admin), orderController.getOrders);
+
+router.get(
+  '/:orderId',
+  auth(UserRole.user, UserRole.provider, UserRole.admin),
+  orderController.getOrdersById,
+);
+
 router.post(
   '/place',
   auth(UserRole.user, UserRole.provider, UserRole.admin),
