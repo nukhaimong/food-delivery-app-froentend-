@@ -1,4 +1,4 @@
-import { betterAuth } from 'better-auth';
+import { betterAuth, boolean } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 // If your Prisma file is located elsewhere, you can change the path
 import { prisma } from './prisma';
@@ -19,9 +19,10 @@ export const auth = betterAuth({
         defaultValue: 'USER',
         required: true,
       },
-      photo_url: {
-        type: 'string',
-        required: false,
+      isActive: {
+        type: 'boolean',
+        required: true,
+        defaultValue: true,
       },
       status: {
         type: 'string',

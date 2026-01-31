@@ -33,6 +33,8 @@ model User {
   photo_url String?
   status    String  @default("ACTIVE")
 
+  isActive Boolean @default(true)
+
   @@unique([email])
   @@map("user")
 }

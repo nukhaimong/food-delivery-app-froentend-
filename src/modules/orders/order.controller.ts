@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { orderService, OrderStatus } from './orders.service';
+import { orderService } from './orders.service';
 import { UserRole } from '../../types';
 
 const createOrder = async (req: Request, res: Response) => {
