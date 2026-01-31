@@ -1,20 +1,31 @@
-import { Order } from '../../../generated/prisma/client';
 import { prisma } from '../../lib/prisma';
 import { OrderData, OrderStatus } from '../../types';
 
-const createOrder = async (customer_id: string, data: Order) => {
-  if (!data.delivery_address?.trim() || !data.phone_number?.trim()) {
+const createOrder = async (customer_id: string, data: OrderData) => {
+  if (
+    !data.delivery_address?.trim() ||
+    !data.phone_number?.trim() ||
+    data.orderItems.length < 1
+  ) {
     throw new Error('You must provide all required information');
   }
-
-  if (data.total_price == null) {
-    data.total_price = 0;
-  }
+  const total_price = data.orderItems.reduce((sum, items) => {
+    return sum + items.price * items.quantity;
+  }, 0);
 
   const order = await prisma.order.create({
     data: {
-      ...data,
-      customer_id,
+      delivery_address: data.delivery_address,
+      phone_number: data.phone_number,
+      customer_id: customer_id,
+      total_price: total_price,
+      orderItems: {
+        create: data.orderItems.map((items) => ({
+          meal_id: items.meal_id,
+          price: items.price,
+          quantity: items.quantity,
+        })),
+      },
     },
     include: {
       customer: {

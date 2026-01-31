@@ -34,6 +34,7 @@ export interface OrderData {
   total_price: number | undefined | null;
   phone_number: string;
   order_method?: string;
+  orderItems: [{ meal_id: string; price: number; quantity: number }];
 }
 
 export enum OrderStatus {
