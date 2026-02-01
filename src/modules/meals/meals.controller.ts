@@ -1,11 +1,18 @@
 import { Request, Response } from 'express';
 import { mealsService } from './meals.service';
-import { success } from 'better-auth';
+import { UserStatus } from '../../types';
 
 const createMeal = async (req: Request, res: Response) => {
   try {
     const provider_id = req.user?.id as string;
     const category_id = req.params.categoryId as string;
+
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
 
     if (!provider_id) {
       return res.status(400).json({
@@ -120,6 +127,7 @@ const getMealsByProvider = async (req: Request, res: Response) => {
   try {
     const providerId = req.params.providerId as string;
     const meals = await mealsService.getMealsByProvider(providerId);
+
     if (meals.length === 0) {
       return res.status(404).json({
         success: false,
@@ -145,6 +153,14 @@ const updateMeal = async (req: Request, res: Response) => {
   try {
     const providerId = req.user?.id as string;
     const mealId = req.params.mealId as string;
+
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     if (!providerId) {
       return res.status(400).json({
         success: false,
@@ -177,6 +193,14 @@ const deleteMeal = async (req: Request, res: Response) => {
   try {
     const providerId = req.user?.id as string;
     const mealId = req.params.mealId as string;
+
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     if (!providerId) {
       return res.status(400).json({
         success: false,
@@ -203,6 +227,7 @@ const deleteMeal = async (req: Request, res: Response) => {
     }
   }
 };
+
 export const mealsController = {
   createMeal,
   deleteMeal,

@@ -22,6 +22,13 @@ const getAllUsers = async (req: Request, res: Response) => {
 
 const getUserById = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const userId = req.params.userId as string;
     const user = await userService.getUserById(userId);
     res.status(200).json({
@@ -41,6 +48,13 @@ const getUserById = async (req: Request, res: Response) => {
 
 const updatedUser = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const userId = req.user?.id as string;
     const user = await userService.updateUser(userId, req.body);
     res.status(200).json({

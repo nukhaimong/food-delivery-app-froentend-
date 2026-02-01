@@ -1,9 +1,16 @@
 import { Request, Response } from 'express';
 import { orderService } from './orders.service';
-import { UserRole } from '../../types';
+import { UserRole, UserStatus } from '../../types';
 
 const createOrder = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const customerId = req.user?.id as string;
 
     const order = await orderService.createOrder(customerId, req.body);
@@ -80,8 +87,15 @@ const getOrderByCustomerId = async (req: Request, res: Response) => {
 
 const updateOrderStatus = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
     const orderId = req.params.orderId as string;
     const order_status = req.body.order_status;
+
     if (
       req.user?.user_role === UserRole.user &&
       ['PENDING', 'PREPARING', 'DELIVERED'].includes(order_status)

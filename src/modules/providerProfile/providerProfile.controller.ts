@@ -1,10 +1,19 @@
 import { Request, Response } from 'express';
 import { providerProfileService } from './providerProfile.service';
+import { UserStatus } from '../../types';
 
 const createProviderProfile = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const provider_id = req.user?.id as string;
     const { restaurant_name, address, phone_number } = req.body;
+
     const profile = await providerProfileService.createProviderProfile({
       provider_id,
       restaurant_name,
@@ -28,6 +37,13 @@ const createProviderProfile = async (req: Request, res: Response) => {
 
 const getAllProvider = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const allProviders = await providerProfileService.getAllProvider();
     return res.status(200).json({
       success: true,
@@ -46,6 +62,13 @@ const getAllProvider = async (req: Request, res: Response) => {
 
 const getProviderById = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const provider_id = req.params.providerId as string;
     const provider = await providerProfileService.getProviderById(provider_id);
     return res.status(200).json({
@@ -65,6 +88,13 @@ const getProviderById = async (req: Request, res: Response) => {
 
 const getProviderOwnProfile = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const provider_id = req.user?.id as string;
     const provider =
       await providerProfileService.getProviderOwnProfile(provider_id);
@@ -86,6 +116,13 @@ const getProviderOwnProfile = async (req: Request, res: Response) => {
 
 const updateProviderProfile = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const provider_id = req.user?.id as string;
 
     const provider = await providerProfileService.updateProviderProfile(
@@ -110,6 +147,12 @@ const updateProviderProfile = async (req: Request, res: Response) => {
 
 const deleteProviderProfile = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
     const provider_id = req.params.providerId as string;
 
     const provider =

@@ -1,9 +1,16 @@
 import { Request, Response } from 'express';
 import { reviewService } from './reviews.service';
-import { UserRole } from '../../types';
+import { UserRole, UserStatus } from '../../types';
 
 const createReviews = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const customerId = req.user?.id as string;
     const mealId = req.params.mealId as string;
 
@@ -59,6 +66,12 @@ const getReviewsByMeal = async (req: Request, res: Response) => {
 
 const updateReview = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
     const customerId = req.user?.id as string;
     const reviewId = req.params.reviewId as string;
 
@@ -85,6 +98,13 @@ const updateReview = async (req: Request, res: Response) => {
 
 const deleteReviews = async (req: Request, res: Response) => {
   try {
+    if (req.user?.status === UserStatus.suspended) {
+      return res.status(400).json({
+        success: false,
+        message: "You're suspended",
+      });
+    }
+
     const customerId = req.user?.id as string;
     const user_role = req.user?.user_role as UserRole;
     const reviewId = req.params.reviewId as string;
