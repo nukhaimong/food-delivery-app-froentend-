@@ -3,17 +3,20 @@ import { prisma } from '../../lib/prisma';
 const createCategory = async ({
   category_name,
   description,
+  category_image,
 }: {
   category_name: string;
   description: string;
+  category_image: string;
 }) => {
-  if (!category_name && !description) {
-    throw new Error('Category name and description are required');
+  if (!category_name || !description || !category_image) {
+    throw new Error('All Fields are required');
   }
   const category = await prisma.foodCategory.create({
     data: {
       category_name,
       description,
+      category_image,
     },
   });
   return category;
@@ -28,6 +31,9 @@ const getCategoryById = async (id: string) => {
   const category = await prisma.foodCategory.findUnique({
     where: {
       id,
+    },
+    include: {
+      foodMeals: true,
     },
   });
   return category;

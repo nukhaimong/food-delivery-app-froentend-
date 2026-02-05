@@ -99,12 +99,13 @@ model ProviderProfile {
 }
 
 model FoodCategory {
-  id            String     @id @default(uuid())
-  category_name String
-  description   String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  foodMeals     FoodMeal[]
+  id             String     @id @default(uuid())
+  category_name  String
+  category_image String @default("")
+  description    String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  foodMeals      FoodMeal[]
 }
 
 model FoodMeal {

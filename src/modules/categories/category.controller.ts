@@ -2,12 +2,12 @@ import { Request, Response } from 'express';
 import { categoryService } from './category.service';
 
 const createCategory = async (req: Request, res: Response) => {
-  console.log(req.user);
-  const { category_name, description } = req.body;
+  const { category_name, description, category_image } = req.body;
   try {
     const category = await categoryService.createCategory({
       category_name,
       description,
+      category_image,
     });
 
     return res.status(201).json({
