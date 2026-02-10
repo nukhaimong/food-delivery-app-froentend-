@@ -1,19 +1,14 @@
 import { prisma } from '../../lib/prisma';
 import { MealData, SortPrice } from '../../types';
 
-const createMeal = async (
-  provider_id: string,
-  category_id: string,
-  data: MealData,
-) => {
-  if (!provider_id || !category_id || !data.meal_name || !data.price) {
+const createMeal = async (provider_id: string, data: MealData) => {
+  if (!provider_id || !data.category_id || !data.meal_name || !data.price) {
     throw new Error('Missing required fields to create a meal');
   }
   const meal = await prisma.foodMeal.create({
     data: {
       ...data,
       provider_id,
-      category_id,
     },
     include: {
       category: { select: { category_name: true } },

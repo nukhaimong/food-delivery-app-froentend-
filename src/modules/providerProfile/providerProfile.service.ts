@@ -8,6 +8,7 @@ interface ProviderProfile {
   phone_number: string;
   restaurant_image: string;
 }
+
 interface ProviderProfileUpdate {
   restaurant_name?: string;
   address?: string;

@@ -5,7 +5,6 @@ import { SortPrice, UserStatus } from '../../types';
 const createMeal = async (req: Request, res: Response) => {
   try {
     const provider_id = req.user?.id as string;
-    const category_id = req.params.categoryId as string;
 
     if (req.user?.status === UserStatus.suspended) {
       return res.status(400).json({
@@ -20,18 +19,8 @@ const createMeal = async (req: Request, res: Response) => {
         message: 'Provider ID is required',
       });
     }
-    if (!category_id) {
-      return res.status(400).json({
-        success: false,
-        message: 'Category ID is required',
-      });
-    }
 
-    const meal = await mealsService.createMeal(
-      provider_id,
-      category_id,
-      req.body,
-    );
+    const meal = await mealsService.createMeal(provider_id, req.body);
 
     return res.status(201).json({
       success: true,

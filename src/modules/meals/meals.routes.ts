@@ -19,11 +19,7 @@ router.put(
   mealsController.updateMeal,
 );
 
-router.post(
-  '/category/:categoryId',
-  auth(UserRole.provider),
-  mealsController.createMeal,
-);
+router.post('/', auth(UserRole.provider), mealsController.createMeal);
 
 router.delete(
   '/:mealId/delete',
