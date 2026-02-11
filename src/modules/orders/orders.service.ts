@@ -3,21 +3,25 @@ import { prisma } from '../../lib/prisma';
 import { OrderData } from '../../types';
 
 const createOrder = async (customer_id: string, data: OrderData[]) => {
-  if(data.length > 1) {
-    throw new Error('Minimum One Item is required')
+  if (data.length < 1) {
+    throw new Error('Minimum One Item is required');
   }
-  
+
   const formattedData = data.map((item) => ({
     ...item,
     total_price: item.price * item.quantity,
     customer_id: customer_id,
-  }))
+  }));
+
+  console.log(formattedData);
 
   const order = await prisma.order.createMany({
     data: formattedData,
     skipDuplicates: true,
-  })
-  
+  });
+
+  console.log(order);
+
   return order;
 };
 

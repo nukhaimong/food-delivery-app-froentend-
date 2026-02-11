@@ -3,6 +3,7 @@ import { orderService } from './orders.service';
 import { UserRole, UserStatus } from '../../types';
 
 const createOrder = async (req: Request, res: Response) => {
+  console.log('came here');
   try {
     if (req.user?.status === UserStatus.suspended) {
       return res.status(400).json({
@@ -12,8 +13,12 @@ const createOrder = async (req: Request, res: Response) => {
     }
 
     const customerId = req.user?.id as string;
+    console.log(req.body);
 
     const order = await orderService.createOrder(customerId, req.body);
+
+    console.log(order);
+
     res.status(201).json({
       success: true,
       message: 'Order placed successfully',

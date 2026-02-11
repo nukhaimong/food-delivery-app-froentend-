@@ -1,4 +1,4 @@
-import { OrderMethod, OrderStatus } from "../../generated/prisma/enums";
+import { OrderMethod, OrderStatus } from '../../generated/prisma/enums';
 
 declare global {
   namespace Express {
@@ -42,7 +42,6 @@ export interface OrderData {
   phone_number: string;
   order_method?: OrderMethod;
 }
-
 
 export enum UserStatus {
   active = 'ACTIVE',
