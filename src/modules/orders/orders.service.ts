@@ -1,4 +1,4 @@
-import { OrderStatus } from '../../../generated/prisma/enums';
+import { OrderStatus } from '../../../src/generated/prisma/enums';
 import { prisma } from '../../lib/prisma';
 import { OrderData } from '../../types';
 

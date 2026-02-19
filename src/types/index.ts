@@ -1,4 +1,4 @@
-import { OrderMethod, OrderStatus } from '../../generated/prisma/enums';
+import { OrderMethod, OrderStatus } from '../../src/generated/prisma/enums';
 
 declare global {
   namespace Express {
