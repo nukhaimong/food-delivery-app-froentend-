@@ -13,8 +13,6 @@ export const auth = betterAuth({
     secure: true,
     sameSite: 'none',
     httpOnly: true,
-    domain: 'food-delivery-app-backend-58qb.onrender.com',
-    path: '/',
   },
 
   user: {
