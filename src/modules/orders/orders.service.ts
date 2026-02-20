@@ -1,5 +1,5 @@
 import { OrderStatus } from '../../generated/prisma/enums';
-import { prisma } from '../../lib/prisma';
+import { prisma } from '../../lib/prisma.js';
 import { OrderData } from '../../types';
 
 const createOrder = async (customer_id: string, data: OrderData[]) => {
