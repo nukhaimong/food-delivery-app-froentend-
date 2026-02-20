@@ -17,7 +17,7 @@ app.use(
     credentials: true,
   }),
 );
-app.all('/api/auth/:path*', toNodeHandler(auth));
+app.all('/api/auth/{*any}', toNodeHandler(auth));
 app.use('/category', categoryRoutes);
 app.use('/provider-profile', providerProfileRoutes);
 app.use('/meals', mealsRoutes);
