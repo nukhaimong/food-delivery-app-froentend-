@@ -13,7 +13,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: 'https://food-delivery-app-frontend-umber.vercel.app/',
+    origin: process.env.APP_URL,
     credentials: true,
   }),
 );
